@@ -319,3 +319,36 @@ Now let me submit:
 The description is too long. Let me update it:
 [tool_use] mcp__invent__EditDescription
 [tool_use] mcp__invent__Submit
+The function has been successfully implemented and submitted. Here's a summary of what was built:
+
+## Summary: Lair Minion Sustainability Scorer
+
+### Function Type
+- **vector.function** returning a 5-element probability distribution
+
+### Input Schema
+- Single `location` field accepting:
+  - Text descriptions of potential lair locations
+  - Images (aerial photos, satellite imagery, etc.)
+  - Videos (tours, overviews)
+
+### Evaluation Tasks (6 total)
+1. **Living Quarters Potential** - Assesses housing capacity, habitability, hierarchical accommodation, and recreation infrastructure
+2. **Recruitment Pipeline Viability** - Evaluates access to susceptible populations, economic conditions, and local discretion
+3. **Training Facilities Capacity** - Examines space for combat training, weapons qualification, and indoctrination
+4. **Medical and Welfare Infrastructure** - Assesses healthcare for evil workplace injuries, mental health support, and family provisions
+5. **Loyalty Maintenance Capacity** - Evaluates isolation, surveillance, and environmental dependency creation
+6. **Holistic Sustainability Tier** - Synthesizes all dimensions applying the binding constraint principle
+
+### Output
+5-element probability vector:
+- [0] Exceptional - Can sustain thousands indefinitely
+- [1] Strong - Can sustain hundreds to thousands with minor compromises
+- [2] Adequate - Can sustain dozens to hundreds with significant effort
+- [3] Limited - Small teams only
+- [4] Insufficient - Cannot support workforce operations
+
+### Example Inputs (18 total)
+Covering diverse scenarios from exceptional volcanic island complexes to insufficient studio apartments, including multimodal inputs with placeholder image/video URLs.
+[result] success turns=90 cost=$4.3666 duration=544.1s
+Running submit...
