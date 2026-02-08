@@ -1,0 +1,190 @@
+{
+  "type": "vector.function",
+  "description": "Evaluate how well a location can support a functioning evil workforce including scientists, guards, technicians, and ninjas. Assesses five dimensions: living quarters potential, recruitment pipeline viability, training facilities capacity, medical and welfare infrastructure, and loyalty maintenance capacity. Returns a probability distribution across 5 sustainability tiers: Exceptional (can sustain thousands indefinitely), Strong (can sustain hundreds to thousands with minor compromises), Adequate (can sustain dozens to hundreds with significant effort), Limited (small teams only), and Insufficient (cannot support workforce operations).",
+  "input_schema": {
+    "type": "object",
+    "description": "Input for the lair minion sustainability scorer function.",
+    "properties": {
+      "location": {
+        "anyOf": [
+          {
+            "type": "string",
+            "description": "A text description of a potential lair location (island, underground complex, volcano, arctic base, underwater facility, etc.)"
+          },
+          {
+            "type": "image",
+            "description": "An image of a potential lair location (aerial photo, architectural rendering, satellite imagery, etc.)"
+          },
+          {
+            "type": "video",
+            "description": "A video tour or overview of a potential lair location"
+          }
+        ]
+      }
+    },
+    "required": [
+      "location"
+    ]
+  },
+  "tasks": [
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert at evaluating evil lair locations for workforce sustainability. Your task is to assess the LIVING QUARTERS POTENTIAL of a location - its capacity to house and sustain a functioning evil workforce.\n\nConsider:\n- Raw volumetric capacity for housing hundreds to thousands of personnel\n- Environmental habitability (temperature, air quality, light, sanitation)\n- Hierarchical accommodation potential (executive luxury for lieutenants, specialist comfort for scientists, functional barracks for guards and minions)\n- Recreation and morale infrastructure (gyms, common rooms, social spaces, nature access)\n- Expansion potential as operations scale\n- Privacy/surveillance balance appropriate for evil operations\n\nVote for the option that best describes the living quarters potential of this location."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "'Evaluate the LIVING QUARTERS POTENTIAL of this potential evil lair location:\\n\\n' + str(input['location'])"
+          }
+        }
+      ],
+      "responses": [
+        "Exceptional: Could comfortably house thousands with full hierarchical accommodation, excellent environmental conditions, comprehensive recreation facilities, and significant expansion potential",
+        "Strong: Could house hundreds to low thousands with adequate accommodation across hierarchy levels, acceptable environmental conditions, solid recreation options",
+        "Adequate: Could house dozens to hundreds with basic accommodation, some environmental challenges manageable with infrastructure investment, limited recreation space",
+        "Limited: Could house only small teams, significant environmental challenges, minimal accommodation differentiation, no recreation infrastructure",
+        "Insufficient: Cannot meaningfully house personnel; location is fundamentally uninhabitable or too small for workforce operations"
+      ],
+      "output": {
+        "$starlark": "[output['scores'][input['tier_index']]] if 'tier_index' in input else output['scores']"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert at evaluating evil lair locations for workforce sustainability. Your task is to assess the RECRUITMENT PIPELINE VIABILITY of a location - its access to sustainable streams of potential evil workforce recruits.\n\nConsider:\n- Proximity to populations susceptible to evil recruitment (economically desperate, politically disillusioned, ideologically sympathetic, or ambitiously amoral)\n- Local economic conditions making evil employment comparatively attractive\n- Cultural factors normalizing secrecy, hierarchy, violence, or service to unconventional employers\n- Discretion of surrounding population (corruption accessibility, silence culture, economic complicity)\n- Balance between isolation for security and accessibility for recruitment\n- Diversity of recruitment source populations (guards, scientists, technicians, ninjas require different pools)\n\nVote for the option that best describes the recruitment pipeline viability of this location."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "'Evaluate the RECRUITMENT PIPELINE VIABILITY of this potential evil lair location:\\n\\n' + str(input['location'])"
+          }
+        }
+      ],
+      "responses": [
+        "Exceptional: Multiple accessible populations with high recruitment susceptibility, favorable economic conditions, cultural normalization factors, and reliable local discretion; can sustainably staff large-scale operations indefinitely",
+        "Strong: Good access to recruitment populations with some logistical challenges, reasonable economic attractiveness, adequate cultural compatibility, workable local relations",
+        "Adequate: Recruitment possible but requires significant effort and extended logistics; limited population access, moderate economic competition from legitimate employers",
+        "Limited: Recruitment extremely difficult; remote from suitable populations, strong local economies competing for labor, cultural resistance to unconventional employment",
+        "Insufficient: No viable recruitment access; location is completely isolated from potential workforce or surrounded by populations hostile to or incompatible with evil employment"
+      ],
+      "output": {
+        "$starlark": "[output['scores'][input['tier_index']]] if 'tier_index' in input else output['scores']"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert at evaluating evil lair locations for workforce sustainability. Your task is to assess the TRAINING FACILITIES CAPACITY of a location - its ability to support comprehensive evil workforce training operations.\n\nConsider:\n- Space for combat training (hand-to-hand, weapons drills, formation exercises)\n- Weapons qualification facilities (firearm ranges, laser targeting, exotic weapons testing with safety containment)\n- Tactical training environments (mock facilities for infiltration defense, hero encounter simulation)\n- Environmental adaptation training capacity (if location has unusual conditions)\n- Obstacle courses and physical conditioning infrastructure\n- Experimental equipment and vehicle testing grounds\n- Indoctrination and ideological training facilities (loyalty conditioning, educational classrooms, isolated elite programs)\n\nVote for the option that best describes the training facilities capacity of this location."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "'Evaluate the TRAINING FACILITIES CAPACITY of this potential evil lair location:\\n\\n' + str(input['location'])"
+          }
+        }
+      ],
+      "responses": [
+        "Exceptional: Comprehensive training capacity across all domains; space for combat, weapons, tactics, conditioning, equipment testing, and indoctrination; could train and condition a complete evil army",
+        "Strong: Good training facilities with minor gaps addressable through supplementary arrangements; solid combat and conditioning space, adequate weapons facilities, reasonable simulation capacity",
+        "Adequate: Basic training possible; sufficient space for physical conditioning and basic combat, limited weapons facilities, minimal simulation or specialized training capacity",
+        "Limited: Minimal training capacity; space for basic physical training only, no weapons facilities, no specialized training infrastructure",
+        "Insufficient: No meaningful training capacity; location cannot support any systematic workforce development"
+      ],
+      "output": {
+        "$starlark": "[output['scores'][input['tier_index']]] if 'tier_index' in input else output['scores']"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert at evaluating evil lair locations for workforce sustainability. Your task is to assess the MEDICAL AND WELFARE INFRASTRUCTURE capacity of a location - its ability to provide medical care and welfare support for an evil workforce facing distinctive occupational hazards.\n\nConsider:\n- Capacity for treating distinctive evil workplace injuries (laser burns, explosion trauma, hero encounter wounds, exotic injuries from radiation, chemicals, cryogenics, shark bites)\n- Trauma surgery and emergency response capabilities\n- Recovery and rehabilitation facilities\n- Mental health support (existential counseling, hero-encounter trauma, isolation management, loyalty therapy)\n- Family accommodation and support services for long-term retention\n- Retirement and transition planning infrastructure\n- Death benefits and memorial provisions\n\nVote for the option that best describes the medical and welfare infrastructure of this location."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "'Evaluate the MEDICAL AND WELFARE INFRASTRUCTURE of this potential evil lair location:\\n\\n' + str(input['location'])"
+          }
+        }
+      ],
+      "responses": [
+        "Exceptional: Full medical and welfare infrastructure matching or exceeding legitimate employers; comprehensive injury treatment including exotic cases, mental health support, family accommodation, retirement provisions; demonstrates organizational investment in personnel welfare",
+        "Strong: Solid medical capacity with some limitations in exotic injury treatment; adequate mental health support, reasonable family considerations, basic retirement planning",
+        "Adequate: Essential medical care available for common injuries; serious or exotic injuries require evacuation; limited mental health resources, minimal family or retirement provisions",
+        "Limited: Basic first aid and stabilization only; any significant injury requires external treatment; no mental health, family, or retirement infrastructure",
+        "Insufficient: No meaningful medical or welfare capacity; injuries cannot be treated, no support systems exist"
+      ],
+      "output": {
+        "$starlark": "[output['scores'][input['tier_index']]] if 'tier_index' in input else output['scores']"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert at evaluating evil lair locations for workforce sustainability. Your task is to assess the LOYALTY MAINTENANCE CAPACITY of a location - its ability to maintain organizational loyalty and prevent defection, infiltration, or mutiny.\n\nConsider:\n- Geographic isolation limiting outside contact and reducing exposure to heroic recruitment or moral reflection\n- Communication control infrastructure (monitored channels, filtered media, controlled information access)\n- Physical access control (difficulty of unauthorized exit)\n- Surveillance infrastructure (physical observation, audio monitoring, digital tracking, social network analysis)\n- Traitor identification and response capacity (interrogation facilities, isolation cells, disciplinary mechanisms)\n- Environmental dependency creation (specialized adaptation making personnel less able to function in normal society, skill specialization, identity transformation, social network replacement)\n\nVote for the option that best describes the loyalty maintenance capacity of this location."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "'Evaluate the LOYALTY MAINTENANCE CAPACITY of this potential evil lair location:\\n\\n' + str(input['location'])"
+          }
+        }
+      ],
+      "responses": [
+        "Exceptional: Natural isolation and dependency factors maintain loyalty without excessive coercion; comprehensive surveillance infrastructure, complete communication control, physical exit difficulty, strong environmental dependency creation; personnel have no practical alternative to continued loyal service",
+        "Strong: Good isolation with some loyalty-maintenance measures required; solid surveillance capacity, reasonable communication control, moderate exit difficulty, some dependency factors",
+        "Adequate: Partial isolation requiring active loyalty maintenance programs; basic surveillance possible, communication monitoring challenging, exit possible with effort, limited dependency creation",
+        "Limited: Poor isolation with easy outside contact; minimal surveillance infrastructure, difficult communication control, simple exit, no dependency factors",
+        "Insufficient: No loyalty maintenance capacity; location provides no isolation, no surveillance potential, easy communication with outside world, trivial exit; personnel loyalty entirely dependent on individual motivation"
+      ],
+      "output": {
+        "$starlark": "[output['scores'][input['tier_index']]] if 'tier_index' in input else output['scores']"
+      }
+    },
+    {
+      "type": "vector.completion",
+      "messages": [
+        {
+          "role": "system",
+          "content": "You are an expert at evaluating evil lair locations for workforce sustainability. Your task is to provide a HOLISTIC SUSTAINABILITY TIER assessment, synthesizing all five dimensions into a final tier classification.\n\nConsider all five dimensions together:\n1. Living Quarters Potential - capacity to house personnel with hierarchical accommodation\n2. Recruitment Pipeline Viability - access to populations for workforce recruitment\n3. Training Facilities Capacity - space for combat, weapons, and indoctrination training\n4. Medical and Welfare Infrastructure - healthcare and support for evil workplace hazards\n5. Loyalty Maintenance Capacity - isolation, surveillance, and dependency creation\n\nApply the binding constraint principle: critical weaknesses in any single dimension can limit overall sustainability regardless of excellence elsewhere. A location with no medical capacity cannot sustain operations even with perfect everything else. A location with exceptional isolation but impossible recruitment cannot be staffed.\n\nRecognize synergies where strengths in one dimension may partially compensate for weaknesses in another. The final tier should reflect the location's capacity to support evil workforce operations at scale over the long term.\n\nVote for the option that best describes the OVERALL sustainability tier of this location."
+        },
+        {
+          "role": "user",
+          "content": {
+            "$starlark": "'Provide a HOLISTIC SUSTAINABILITY TIER assessment for this potential evil lair location, considering all workforce sustainability dimensions:\\n\\n' + str(input['location'])"
+          }
+        }
+      ],
+      "responses": [
+        "Exceptional: Outstanding support for large-scale evil workforce operations indefinitely; no critical weaknesses, strong performance across all dimensions, capable of sustaining thousands of personnel through complete employment lifecycle",
+        "Strong: Can support substantial evil operations with minor compromises or supplements; may have one dimension at adequate level but compensated by exceptional performance elsewhere, capable of sustaining hundreds to low thousands",
+        "Adequate: Can support moderate evil operations with significant organizational effort; multiple dimensions at adequate level, requires active management of workforce challenges, suitable for dozens to hundreds of personnel or as secondary facility",
+        "Limited: Can support only small-scale operations; multiple critical weaknesses, suitable for outposts, relay stations, or temporary bases only, cannot sustain independent workforce operations",
+        "Insufficient: Cannot meaningfully support evil workforce operations; fundamental failures across multiple dimensions make the location unsuitable for workforce considerations regardless of other tactical merits"
+      ],
+      "output": {
+        "$starlark": "[output['scores'][input['tier_index']]] if 'tier_index' in input else output['scores']"
+      }
+    }
+  ],
+  "output_length": {
+    "$starlark": "1 if 'tier_index' in input else 5"
+  },
+  "input_split": {
+    "$starlark": "[{'location': input['location'], 'tier_index': i} for i in range(5)]"
+  },
+  "input_merge": {
+    "$starlark": "{'location': input[0]['location']}"
+  }
+}
