@@ -316,3 +316,6 @@ Now let me write the README and then submit:
 [tool_use] mcp__invent__WriteReadme
 Now let me submit:
 [tool_use] mcp__invent__Submit
+The description is too long. Let me update it:
+[tool_use] mcp__invent__EditDescription
+[tool_use] mcp__invent__Submit

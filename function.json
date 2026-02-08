@@ -1,6 +1,6 @@
 {
   "type": "vector.function",
-  "description": "Evaluate how well a location can support a functioning evil workforce including scientists, guards, technicians, and ninjas. Assesses five dimensions: living quarters potential, recruitment pipeline viability, training facilities capacity, medical and welfare infrastructure, and loyalty maintenance capacity. Returns a probability distribution across 5 sustainability tiers: Exceptional (can sustain thousands indefinitely), Strong (can sustain hundreds to thousands with minor compromises), Adequate (can sustain dozens to hundreds with significant effort), Limited (small teams only), and Insufficient (cannot support workforce operations).",
+  "description": "Evaluate how well a location can support an evil workforce. Assesses living quarters, recruitment, training, medical/welfare, and loyalty maintenance. Returns probability distribution across 5 tiers: Exceptional, Strong, Adequate, Limited, Insufficient.",
   "input_schema": {
     "type": "object",
     "description": "Input for the lair minion sustainability scorer function.",
